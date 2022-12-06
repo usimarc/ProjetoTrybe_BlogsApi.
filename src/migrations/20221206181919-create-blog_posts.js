@@ -27,7 +27,8 @@ module.exports = {
           model: 'users',
           key: 'id',
         },
-        onDelete:'CASCADE',
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
 
       published: {
