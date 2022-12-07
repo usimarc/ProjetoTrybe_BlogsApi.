@@ -1,7 +1,7 @@
-// // const jwtConfig = require('../auth/jwtConfig');
-// require('dotenv').config();
+const jwtConfig = require('./jwtconfig');
+require('dotenv').config();
 
-// const secret = process.env.JWT_SECRET || 'segredoDoXablau';
+const secret = process.env.JWT_SECRET || 'senha';
 
 const validaLogin = async (req, res, next) => {
   const { email, password } = req.body;
@@ -31,7 +31,16 @@ const validaUser = async (req, res, next) => {
   next();
 };
 
+const validaToken = (req, res, next) => {
+  const { authorization } = req.headers;
+  if (!authorization.length) return res.status(401).json({ message: 'Token not found' });
+  const payload = jwtConfig.verificaToken(authorization, secret);
+  if (!payload) return res.status(401).json({ message: 'Expired or invalid token' });
+  next();
+};
+
 module.exports = {
   validaLogin,
   validaUser,
+  validaToken,
 };

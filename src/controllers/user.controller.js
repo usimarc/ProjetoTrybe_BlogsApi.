@@ -3,6 +3,11 @@ const jwtConfig = require('../middlewares/jwtconfig');
 // require('dotenv').config();
 // const secret = process.env.JWT_SECRET || 'maisUmSegredoDoXablau';
 
+const pegarTodosUsuarios = async (_req, res) => {
+  const buscaUsuario = await userService.pegarTodosUsuarios();
+  return res.status(200).json(buscaUsuario);
+};
+
 const getLogin = async (req, res) => {
   const { email } = req.body;
   const buscaUsuario = await userService.getLogin(email);
@@ -24,4 +29,6 @@ const criarUsuario = async (req, res) => {
 module.exports = {
   getLogin,
   criarUsuario,
+  pegarTodosUsuarios,
+  
 };

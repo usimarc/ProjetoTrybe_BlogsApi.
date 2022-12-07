@@ -14,6 +14,17 @@ const criarToken = (user) => {
   return token;
 };
 
+const verificaToken = (token) => {
+  try {
+    const payload = jwt.verify(token, secret);
+    return payload;
+  } catch (error) {
+    return null;
+  }
+};
+
+// { isError: true, error }
 module.exports = {
   criarToken,
+  verificaToken,
 };
