@@ -5,6 +5,11 @@ const getLogin = async (email) => {
   return emailExiste;
 };
 
+const criaUsuario = async (usuario) => {  
+  await User.create(usuario);
+};
+
 module.exports = {
   getLogin,
+  criaUsuario,
 };

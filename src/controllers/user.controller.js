@@ -11,6 +11,17 @@ const getLogin = async (req, res) => {
   return res.status(200).json({ token });
 };
 
+const criarUsuario = async (req, res) => {
+  const { email, displayName, password, image } = req.body;
+  const buscaUsuario = await userService.getLogin(email);
+  if (buscaUsuario) return res.status(409).json({ message: 'User already registered' });
+  await userService.criaUsuario({ email, displayName, password, image });
+  const novoUsuario = await userService.getLogin(email);
+  const token = jwtConfig.criarToken({ id: novoUsuario.id, email });
+  return res.status(201).json({ token });
+};
+
 module.exports = {
   getLogin,
+  criarUsuario,
 };
