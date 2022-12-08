@@ -1,5 +1,6 @@
 const express = require('express');
 const userController = require('./controllers/user.controller');
+const categoryController = require('./controllers/category.controller');
 const {
   validaLogin, validaUser, validaToken,
 } = require('./middlewares/middlewares');
@@ -12,5 +13,7 @@ app.use(express.json());
 app.post('/login', validaLogin, userController.getLogin);
 app.post('/user', validaUser, userController.criarUsuario);
 app.get('/user', validaToken, userController.pegarTodosUsuarios);
+
+app.get('/categories', validaToken, categoryController.todasCategorias);
 
 module.exports = app;
