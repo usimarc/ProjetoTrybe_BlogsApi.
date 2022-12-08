@@ -13,7 +13,7 @@ app.use(express.json());
 // ...validaToken
 app.post('/login', validaLogin, userController.getLogin);
 app.post('/user', validaUser, userController.criarUsuario);
-app.post('/post', validaToken, validaPost, postController.createPost);
+app.post('/post', validaToken, validaPost, postController.criarPost);
 app.delete('/user/me', validaToken, userController.deleteUser);
 app.get('/user/:id', validaToken, userController.getUserById);
 app.get('/user', validaToken, userController.pegarTodosUsuarios);

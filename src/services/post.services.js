@@ -1,10 +1,10 @@
-const { BlogPost, Category } = require('../models');
+const { BlogPost, Category, PostCategory } = require('../models');
 
-const createPost = async (post) => {
+const criarPost = async (post) => {
   await BlogPost.create(post);
 };
 
-const getPost = async (title) => {  
+const pegarPost = async (title) => {  
   const hasBlogPost = await BlogPost.findOne({ where: { title } });
 
   return hasBlogPost;
@@ -13,14 +13,19 @@ const getPost = async (title) => {
 const findCategoryId = async (categoryIds) => {
   const hasPost = await Promise.all(categoryIds
     .map(async (categoryId) => Category.findByPk(categoryId)));
-
   const testCategory = hasPost.some((categoryId) => !categoryId);
-
   return testCategory;
 };
 
+const criarPostCategory = async (categoryIds) => {
+  await Promise.all(categoryIds
+    .map(async (categoryId) => PostCategory.create(categoryId)));
+};
+
 module.exports = {
-  createPost,
-  getPost,
+  pegarPost,
+  criarPost,
   findCategoryId,
+  criarPostCategory,
+
 };
