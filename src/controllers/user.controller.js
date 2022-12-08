@@ -1,5 +1,6 @@
 const userService = require('../services/user.services');
 const jwtConfig = require('../middlewares/jwtconfig');
+require('dotenv').config();
 
 const pegarTodosUsuarios = async (_req, res) => {
   const buscaUsuario = await userService.pegarTodosUsuarios();
@@ -13,6 +14,8 @@ const getLogin = async (req, res) => {
   const token = jwtConfig.criarToken({ id: buscaUsuario.id, email });
   return res.status(200).json({ token });
 };
+
+const secret = process.env.JWT_SECRET || 'senha';
 
 const getUserById = async (req, res) => {
   const { id } = req.params;
@@ -31,10 +34,22 @@ const criarUsuario = async (req, res) => {
   return res.status(201).json({ token });
 };
 
+const deleteUser = async (req, res) => {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+  if (id) await userService.deleteUser(id);
+  else {
+    const payload = jwtConfig.verificaToken(authorization, secret);
+    await userService.deleteUser(payload.id);
+  }
+  return res.status(204).json();
+};
+
 module.exports = {
   getLogin,
   criarUsuario,
   pegarTodosUsuarios,
   getUserById,
+  deleteUser,
   
 };
