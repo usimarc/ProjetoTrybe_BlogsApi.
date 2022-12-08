@@ -12,6 +12,7 @@ app.use(express.json());
 // ...validaToken
 app.post('/login', validaLogin, userController.getLogin);
 app.post('/user', validaUser, userController.criarUsuario);
+app.get('/user/:id', validaToken, userController.getUserById);
 app.get('/user', validaToken, userController.pegarTodosUsuarios);
 
 app.post('/categories', validaToken, validaCategoria, categoryController.criarCategoria);
