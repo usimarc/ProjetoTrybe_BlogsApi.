@@ -1,7 +1,5 @@
 const userService = require('../services/user.services');
 const jwtConfig = require('../middlewares/jwtconfig');
-// require('dotenv').config();
-// const secret = process.env.JWT_SECRET || 'maisUmSegredoDoXablau';
 
 const pegarTodosUsuarios = async (_req, res) => {
   const buscaUsuario = await userService.pegarTodosUsuarios();
